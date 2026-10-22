@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEXO Noticias · Núcleo Español por el Orden</title>
+<style>
+  :root{--burdeos:#5a2a3a;--burdeos-osc:#431e2b;--texto:#1c1c1c;--gris:#6b6b6b;--linea:#e5e1e2;--fondo:#fff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--fondo);color:var(--texto);font-family:Georgia,"Times New Roman",serif;line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  .top{background:var(--burdeos);color:#fff;font:12px/1 system-ui,sans-serif;padding:8px 16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  header.main{border-bottom:3px solid var(--burdeos);background:#fff}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+  .head-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:14px;padding:18px 0}
+  .brand img.logo{width:64px;height:64px;border-radius:4px;background:var(--burdeos)}
+  .brand .logo-fallback{width:64px;height:64px;border-radius:4px;background:var(--burdeos);color:#fff;display:none;align-items:center;justify-content:center;font:700 22px system-ui}
+  .brand h1{margin:0;font-size:30px;letter-spacing:.5px;color:var(--burdeos)}
+  .brand small{display:block;font:13px system-ui,sans-serif;color:var(--gris)}
+  .buscador{display:flex;gap:6px}
+  .buscador input{font:15px system-ui,sans-serif;padding:9px 12px;border:1px solid #c9bfc3;border-radius:4px;width:210px;max-width:100%}
+  .buscador button{font:600 14px system-ui,sans-serif;background:var(--burdeos);color:#fff;border:0;border-radius:4px;padding:9px 14px;cursor:pointer}
+  nav{border-top:1px solid var(--linea);font:600 13px system-ui,sans-serif;text-transform:uppercase;letter-spacing:.6px}
+  nav .wrap{display:flex;gap:22px;overflow-x:auto;padding-top:11px;padding-bottom:11px}
+  nav a{white-space:nowrap;color:#333;padding-bottom:3px;border-bottom:2px solid transparent}
+  nav a.activa{color:var(--burdeos);border-bottom-color:var(--burdeos)}
+  .grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:36px;padding:28px 0 48px}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .tag{font:700 12px system-ui,sans-serif;color:var(--burdeos);text-transform:uppercase;letter-spacing:1px}
+  .meta{font:13px system-ui,sans-serif;color:var(--gris)}
+  /* noticia completa */
+  article.noticia h2{font-size:38px;line-height:1.15;margin:8px 0 12px}
+  @media(max-width:600px){article.noticia h2{font-size:28px}}
+  .sub{font-size:19px;color:#444;margin:0 0 14px}
+  .barra-meta{border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:9px 0;margin-bottom:20px}
+  figure{margin:0 0 22px}
+  figure img.ph{width:100%;aspect-ratio:3/2;object-fit:cover;background:#f2eef0;display:block}
+  figcaption{font:13px/1.4 system-ui,sans-serif;color:var(--gris);padding-top:6px}
+  .ph-empty{aspect-ratio:3/2;background:#f2eef0;border:1px dashed #c9bfc3;display:none;align-items:center;justify-content:center;font:13px system-ui;color:var(--gris);text-align:center;padding:12px}
+  .cuerpo p{font-size:18px;margin:0 0 18px}
+  .cuerpo blockquote{margin:26px 0;padding:6px 0 6px 20px;border-left:4px solid var(--burdeos);font-size:22px;font-style:italic;color:var(--burdeos-osc)}
+  .cuerpo blockquote cite{display:block;font:600 13px system-ui,sans-serif;font-style:normal;color:var(--gris);margin-top:6px}
+  .cuerpo h3{font-size:22px;margin:30px 0 10px;color:var(--burdeos)}
+  .cuerpo ul{padding-left:20px;font-size:17px}
+  .cuerpo li{margin-bottom:6px}
+  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:10px 0 26px}
+  .volver{display:inline-block;font:600 14px system-ui,sans-serif;color:var(--burdeos);margin-bottom:18px}
+  /* listados */
+  .titulo-lista{font:700 14px system-ui,sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--burdeos);border-bottom:3px solid var(--burdeos);padding-bottom:8px;margin:0 0 22px}
+  .destacada{margin-bottom:30px;padding-bottom:26px;border-bottom:1px solid var(--linea)}
+  .destacada h2{font-size:34px;line-height:1.15;margin:6px 0 10px}
+  .destacada h2 a:hover,.item h3 a:hover{color:var(--burdeos)}
+  .destacada p{font-size:18px;color:#444;margin:0 0 8px}
+  .item{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:18px 0;border-bottom:1px solid var(--linea)}
+  @media(max-width:520px){.item{grid-template-columns:1fr}}
+  .item img,.item .thumb-empty{width:100%;aspect-ratio:3/2;object-fit:cover;background:#f2eef0;display:block}
+  .item h3{margin:4px 0 6px;font-size:21px;line-height:1.25}
+  .item p{margin:0;font-size:16px;color:#555}
+  .vacio{font:16px system-ui,sans-serif;color:var(--gris);padding:30px 0}
+  /* lateral */
+  aside .box{border-top:3px solid var(--burdeos);padding-top:12px;margin-bottom:30px}
+  aside h4{margin:0 0 10px;font:700 14px system-ui,sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--burdeos)}
+  aside ul{list-style:none;margin:0;padding:0}
+  aside li{padding:10px 0;border-bottom:1px solid var(--linea);font-size:16px}
+  aside li span{display:block;font:12px system-ui,sans-serif;color:var(--gris)}
+  aside li a:hover{color:var(--burdeos)}
+  .lema{background:var(--burdeos);color:#fff;padding:22px;text-align:center;margin-bottom:30px}
+  .lema b{display:block;font-size:24px;margin-bottom:6px}
+  .lema span{font:13px system-ui,sans-serif;opacity:.85}
+  footer{background:var(--burdeos-osc);color:#d9cbd0;font:13px/1.6 system-ui,sans-serif;padding:26px 0}
+  footer strong{color:#fff}
+</style>
+</head>
+<body>
+
+<div class="top"><span id="fecha-hoy"></span><span>Sala de prensa oficial de NEXO</span></div>
+
+<header class="main">
+  <div class="wrap head-row">
+    <a class="brand" href="#/">
+      <img class="logo" src="logo.png" alt="Logotipo de NEXO" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="logo-fallback">NX</div>
+      <div><h1>NEXO Noticias</h1><small>Núcleo Español por el Orden · Información oficial del partido</small></div>
+    </a>
+    <form class="buscador" id="form-buscar">
+      <input type="search" id="q" placeholder="Buscar noticias…" aria-label="Buscar noticias">
+      <button type="submit">Buscar</button>
+    </form>
+  </div>
+  <nav><div class="wrap" id="menu"></div></nav>
+</header>
+
+<main class="wrap grid">
+  <section id="contenido"></section>
+  <aside>
+    <div class="lema"><b>Volver a lo que importa</b><span>Lema de NEXO</span></div>
+    <div class="box"><h4>Últimas noticias</h4><ul id="ultimas"></ul></div>
+    <div class="box">
+      <h4>Contacto de prensa</h4>
+      <p style="font:14px system-ui">Dirección de comunicación<br>María Estibaly Pérez<br><span style="color:var(--gris)">nexopoliticom26@gmail.com</span></p>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  <div class="wrap">
+    <strong>NEXO Noticias</strong> es el canal informativo oficial de Núcleo Español por el Orden. Los contenidos son elaborados por el propio partido.<br>
+    Proyecto académico Politicom · © 2026 NEXO
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   CÓMO AÑADIR UNA NOTICIA NUEVA
+   1) Copia el bloque de ejemplo de abajo (desde "{" hasta "},").
+   2) Pégalo justo debajo de "const NOTICIAS = [" , ANTES de las demás.
+   3) Cambia los datos. Las noticias antiguas se quedan guardadas.
+   4) Vuelve a subir el archivo index.html (y las fotos nuevas) a tu web.
+
+   - id:      una palabra sin espacios ni tildes, distinta en cada noticia
+              (ej.: "vivienda-joven"). Será parte del enlace.
+   - seccion: familia, vivienda, economia, educacion o comunicados
+   - fecha:   AAAA-MM-DD
+   - foto:    nombre del archivo de la foto (ej.: "foto4.jpg") o "" si no hay
+   - cuerpo:  texto en HTML: <p>párrafo</p>, <h3>subtítulo</h3>,
+              <blockquote>cita<cite>quién la dijo</cite></blockquote>
+              <ul><li>punto</li></ul>
+
+   BLOQUE DE EJEMPLO:
+   {
+     id: "ejemplo",
+     seccion: "familia",
+     fecha: "2026-11-01",
+     titulo: "Título de la noticia",
+     resumen: "Una o dos frases que aparecen en la portada.",
+     foto: "",
+     pie: "Pie de la foto.",
+     cuerpo: `
+       <p>Primer párrafo.</p>
+       <p>Segundo párrafo.</p>
+     `
+   },
+   ===================================================================== */
+
+const SECCIONES = {
+  familia: "Familia",
+  vivienda: "Vivienda",
+  economia: "Economía",
+  educacion: "Educación",
+  comunicados: "Comunicados"
+};
+
+const NOTICIAS = [
+  {
+    id: "presentacion-oficial",
+    seccion: "comunicados",
+    fecha: "2026-10-22",
+    titulo: "NEXO se presenta oficialmente: «Volver a lo que importa»",
+    resumen: "El nuevo partido, Núcleo Español por el Orden, da a conocer su proyecto centrado en la familia, la identidad nacional y la responsabilidad, y presenta a su candidata, Marta García, y a su equipo.",
+    foto: "foto3.jpg",
+    pie: "La candidata, Marta García, durante la presentación oficial de NEXO.",
+    cuerpo: `
+      <p><b>España, 22 de octubre.</b> Núcleo Español por el Orden (NEXO) ha celebrado hoy su acto de presentación oficial, en el que ha expuesto los principios que guiarán al partido: la defensa de la familia, el valor de las raíces y la responsabilidad de construir el futuro sin olvidar la identidad propia.</p>
+      <p>La portavoz, Carmen Rodríguez, abrió el acto agradeciendo la asistencia y resumiendo el espíritu de la formación en una idea: volver a lo que importa. A continuación cedió la palabra a la candidata, Marta García.</p>
+      <blockquote>Creemos que avanzar no significa olvidar de dónde venimos.<cite>Marta García, candidata de NEXO</cite></blockquote>
+      <p>García, madre de tres hijos, explicó que su vocación siempre ha sido su hogar y que fue una experiencia familiar la que la animó a dar el paso a la vida política. Defendió que la sociedad debe volver a situar a la familia en el centro.</p>
+      <h3>Las propuestas</h3>
+      <p>Entre las prioridades que expuso el partido figuran facilitar el acceso a la vivienda para que los jóvenes puedan emanciparse, apoyar a las pequeñas empresas y proteger la producción nacional, e impulsar ayudas económicas para que las familias decidan cómo organizar la crianza y el cuidado del hogar. NEXO también defiende las tradiciones cristianas, la identidad nacional y una educación basada en la excelencia, la autoridad y el respeto.</p>
+      <h3>Qué significa NEXO</h3>
+      <p>La candidata desgranó el nombre del partido: <b>Núcleo</b>, porque la familia es la base de la sociedad; <b>Español</b>, por la defensa de la identidad, la cultura y las tradiciones; y <b>Orden</b>, por la apuesta por la responsabilidad y una sociedad con principios claros.</p>
+      <div class="gallery">
+        <figure>
+          <img class="ph" src="foto1.jpg" alt="Acreditaciones del equipo de NEXO sobre una bandera de España" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ph-empty">foto1.jpg</div>
+          <figcaption>Acreditaciones del equipo de NEXO.</figcaption>
+        </figure>
+        <figure>
+          <img class="ph" src="foto2.jpg" alt="Detalle de la candidata con pulsera con la bandera de España" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="ph-empty">foto2.jpg</div>
+          <figcaption>Detalle de la candidata durante el acto.</figcaption>
+        </figure>
+      </div>
+      <h3>Un equipo para el proyecto</h3>
+      <figure>
+        <img class="ph" src="foto4.jpg" alt="El equipo de NEXO al completo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="ph-empty">Coloca aquí la foto del equipo (foto4.jpg)</div>
+        <figcaption>El equipo de NEXO al completo en el acto de presentación.</figcaption>
+      </figure>
+      <p>Rodríguez presentó al equipo que acompañará a la candidata:</p>
+      <ul>
+        <li><b>Ángela Fernández</b>, jefa de campaña.</li>
+        <li><b>María Estibaly Pérez</b>, directora de comunicación.</li>
+        <li><b>Ana Revilla y Mireya Rojas</b>, responsables de Investigación e ideología.</li>
+        <li><b>Erica Guzmán</b>, directora de Estrategia.</li>
+        <li><b>Virginia Tarradas</b>, creadora de contenido.</li>
+      </ul>
+      <blockquote>Cenad con los vuestros: ese, y no este atril, es el verdadero centro del mundo.<cite>Marta García, en el cierre del acto</cite></blockquote>
+      <p>El acto concluyó con un turno de preguntas para los medios de comunicación. NEXO resumió su mensaje final así: se puede avanzar sin renunciar a la identidad. «Creemos en la familia, en el valor de nuestras raíces y en el futuro de España», afirmó la candidata.</p>
+    `
+  }
+];
+
+/* ------------------ A partir de aquí no hace falta tocar nada ------------------ */
+
+const $ = s => document.querySelector(s);
+const MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+const DIAS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+
+function fechaLarga(iso){
+  const [y,m,d] = iso.split("-").map(Number);
+  return `${d} de ${MESES[m-1]} de ${y}`;
+}
+function esc(t){return String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function ordenadas(){return [...NOTICIAS].sort((a,b)=>b.fecha.localeCompare(a.fecha));}
+function textoPlano(n){return (n.titulo+" "+n.resumen+" "+n.cuerpo.replace(/<[^>]+>/g," ")).toLowerCase();}
+
+function foto(n,clase){
+  if(!n.foto) return `<div class="thumb-empty"></div>`;
+  return `<img class="${clase||""}" src="${esc(n.foto)}" alt="" onerror="this.style.visibility='hidden'">`;
+}
+
+function tarjeta(n){
+  return `<div class="item">
+    <a href="#/noticia/${n.id}">${foto(n)}</a>
+    <div>
+      <div class="tag">${SECCIONES[n.seccion]||""}</div>
+      <h3><a href="#/noticia/${n.id}">${esc(n.titulo)}</a></h3>
+      <p>${esc(n.resumen)}</p>
+      <div class="meta">${fechaLarga(n.fecha)}</div>
+    </div></div>`;
+}
+
+function lista(titulo, items){
+  if(!items.length) return `<h2 class="titulo-lista">${titulo}</h2><p class="vacio">No hay noticias que mostrar todavía.</p>`;
+  const [primera,...resto] = items;
+  return `<h2 class="titulo-lista">${titulo}</h2>
+    <div class="destacada">
+      <div class="tag">${SECCIONES[primera.seccion]||""}</div>
+      <h2><a href="#/noticia/${primera.id}">${esc(primera.titulo)}</a></h2>
+      <p>${esc(primera.resumen)}</p>
+      <div class="meta">${fechaLarga(primera.fecha)} · <a href="#/noticia/${primera.id}" style="color:var(--burdeos)">Leer noticia completa</a></div>
+    </div>${resto.map(tarjeta).join("")}`;
+}
+
+function noticiaCompleta(n){
+  const fig = n.foto ? `<figure>
+    <img class="ph" src="${esc(n.foto)}" alt="${esc(n.pie||n.titulo)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="ph-empty">Coloca aquí la foto (${esc(n.foto)})</div>
+    <figcaption>${esc(n.pie||"")}</figcaption></figure>` : "";
+  return `<a class="volver" href="#/">← Volver a la portada</a>
+    <article class="noticia">
+      <div class="tag">${SECCIONES[n.seccion]||""}</div>
+      <h2>${esc(n.titulo)}</h2>
+      <p class="sub">${esc(n.resumen)}</p>
+      <div class="meta barra-meta">Por la redacción de NEXO Noticias · ${fechaLarga(n.fecha)} · Comunicado del partido</div>
+      ${fig}
+      <div class="cuerpo">${n.cuerpo}</div>
+    </article>`;
+}
+
+function pintarMenu(activa){
+  let h = `<a href="#/" class="${activa==="inicio"?"activa":""}">Última hora</a>`;
+  for(const k in SECCIONES) h += `<a href="#/seccion/${k}" class="${activa===k?"activa":""}">${SECCIONES[k]}</a>`;
+  $("#menu").innerHTML = h;
+}
+
+function pintarUltimas(){
+  $("#ultimas").innerHTML = ordenadas().slice(0,5).map(n=>`<li><a href="#/noticia/${n.id}">${esc(n.titulo)}</a><span>${fechaLarga(n.fecha)}</span></li>`).join("");
+}
+
+function ruta(){
+  const partes = decodeURIComponent(location.hash.replace(/^#\/?/,"")).split("/");
+  const [tipo,valor] = partes;
+  let html="", activa="inicio";
+  if(tipo==="noticia"){
+    const n = NOTICIAS.find(x=>x.id===valor);
+    if(n){ html=noticiaCompleta(n); activa=n.seccion; document.title=n.titulo+" · NEXO Noticias"; }
+    else html=`<a class="volver" href="#/">← Volver a la portada</a><p class="vacio">No hemos encontrado esa noticia.</p>`;
+  } else if(tipo==="seccion" && SECCIONES[valor]){
+    activa=valor; html=lista(SECCIONES[valor], ordenadas().filter(n=>n.seccion===valor)); document.title=SECCIONES[valor]+" · NEXO Noticias";
+  } else if(tipo==="buscar"){
+    const q=(valor||"").toLowerCase().trim();
+    html=lista(`Resultados para «${esc(valor||"")}»`, ordenadas().filter(n=>textoPlano(n).includes(q)));
+    activa="";
+  } else {
+    html=lista("Última hora", ordenadas()); document.title="NEXO Noticias · Núcleo Español por el Orden";
+  }
+  $("#contenido").innerHTML = html;
+  pintarMenu(activa);
+  window.scrollTo(0,0);
+}
+
+$("#form-buscar").addEventListener("submit",e=>{
+  e.preventDefault();
+  const q=$("#q").value.trim();
+  if(q) location.hash="#/buscar/"+encodeURIComponent(q);
+});
+window.addEventListener("hashchange",ruta);
+
+const hoy=new Date();
+$("#fecha-hoy").textContent=`${DIAS[hoy.getDay()][0].toUpperCase()+DIAS[hoy.getDay()].slice(1)}, ${hoy.getDate()} de ${MESES[hoy.getMonth()]} de ${hoy.getFullYear()}`;
+pintarUltimas();
+ruta();
+</script>
+</body>
+</html>
